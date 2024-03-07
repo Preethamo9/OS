@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include<stdlib.h>
+int S=1;
+int F=0;
+int E=4,X=0;
+void signal(int*S)
+{
+++S;
+return;
+}
+void wait(int*S)
+{
+--S;
+return;
+}
+void producer()
+{
+wait(&S);
+++F;
+--E;
+X++;
+printf("\n Producer produces item %d",X);
+signal(&S);
+}
+void consumer()
+{
+wait(&S);
+--F;
+++E;
+printf("\nConsumer consumes the item %d",X); X-
+-;
+signal(&S);
+}
+int main()
+{
+ int n,i;
+printf("\n 1.Press 1 for Producer\n 2.Press 2 for Consumer\n 3.Press 3 to
+Exit\n");
+for(i=1;i>0;i++)
+{
+printf("\n Enter your choice---");
+scanf("%d",&n);
+switch (n)
+{
+case 1:
+if ((S==1)&&(E!=0))
+{
+producer();
+}
+else
+{
+printf("\nBuffer is full!!");
+}
+break;
+case 2:
+if ((S==1)&&(F!=0))
+{
+consumer();
+}
+else
+{
+printf("\nBuffer is empty!!");
+}
+break;
+case 3:
+exit(0);
+break;
+}
+}
+}
